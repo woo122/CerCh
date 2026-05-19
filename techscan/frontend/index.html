@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>테크스캔 - 기업 기술/자격증 분석</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/common.css" />
+  <style>
+    /* 달력 */
+    .calendar {
+      width: 300px; height: 200px; border: 1px solid #e0e0e0; border-radius: 10px;
+      background: #fff; padding: 12px; display: flex; flex-direction: column; gap: 6px; overflow: hidden;
+    }
+    .cal-header { display: flex; align-items: center; justify-content: space-between; }
+    .cal-title { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+    .cal-nav { background: none; border: none; font-size: 18px; color: #555; cursor: pointer; line-height: 1; padding: 0 4px; }
+    .cal-nav:hover { color: #22c55e; }
+    .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 10px; color: #aaa; font-weight: 500; }
+    .cal-days span:first-child { color: #f87171; }
+    .cal-days span:last-child  { color: #60a5fa; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 1px; flex: 1; }
+    .cal-grid span {
+      font-size: 11px; color: #333; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; width: 22px; height: 22px; margin: auto; cursor: pointer; transition: background 0.15s;
+    }
+    .cal-grid span:hover { background: #f0fdf4; }
+    .cal-grid span.today { background: #22c55e; color: #fff !important; font-weight: 600; }
+    .cal-grid span.other-month { color: #ccc; }
+    .cal-grid span.sun { color: #f87171; }
+    .cal-grid span.sat { color: #60a5fa; }
+
+    /* D-day 박스 */
+    .dday-box {
+      width: 300px; border: 1px solid #e0e0e0; border-radius: 10px;
+      background: #fff; padding: 14px;
+    }
+    .dday-list { display: flex; flex-direction: column; gap: 8px; }
+    .dday-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 10px; border-radius: 8px; background: #f8fffe;
+      border: 1px solid #e0f2e9;
+    }
+    .dday-name { font-size: 12px; font-weight: 500; color: #333; }
+    .dday-sub  { font-size: 10px; color: #aaa; margin-top: 2px; }
+    .dday-count {
+      font-size: 13px; font-weight: 700; color: #fff;
+      background: #22c55e; border-radius: 6px;
+      padding: 3px 10px; white-space: nowrap; flex-shrink: 0;
+    }
+    .dday-count.soon { background: #ef4444; }
+    .dday-count.week { background: #f97316; }
+
+    /* 그래프 박스 */
+    .box-graph {
+      width: 700px; height: 450px; border: 1px solid #e0e0e0; border-radius: 10px;
+      background: #fff; padding: 24px; display: flex; flex-direction: column;
+    }
+    .chart-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .chart-tab {
+      padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      border: 1px solid #ddd; background: #fff; color: #555; cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .chart-tab.active { background: #22c55e; color: #fff; border-color: #22c55e; }
+    .bar-chart { display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: center; }
+    .bar-row { display: flex; align-items: center; gap: 10px; }
+    .bar-label { width: 90px; font-size: 12px; color: #444; text-align: right; flex-shrink: 0; }
+    .bar-track { flex: 1; height: 24px; background: #f0f0f0; border-radius: 6px; overflow: hidden; }
+    .bar-fill {
+      height: 100%; border-radius: 6px; background: #22c55e;
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-right: 8px; font-size: 11px; font-weight: 600; color: #fff;
+    }
+    .bar-fill.blue   { background: #60a5fa; }
+    .bar-fill.purple { background: #a78bfa; }
+    .bar-fill.orange { background: #fb923c; }
+    .bar-fill.teal   { background: #2dd4bf; }
+    .bar-fill.pink   { background: #f472b6; }
+    .bar-fill.yellow { background: #facc15; color: #555; }
+
+    /* 오른쪽 패널 */
+    .right-panel { width: 230px; display: flex; flex-direction: column; gap: 16px; }
+    .content-row { display: flex; justify-content: space-between; align-items: flex-start; }
+
+    /* 순위표 박스 */
+    .box-rank {
+      width: 100%; border: 1px solid #e0e0e0; border-radius: 10px;
+      background: #fff; padding: 16px; display: flex; flex-direction: column;
+    }
+    .rank-list { display: flex; flex-direction: column; gap: 9px; margin-top: 10px; }
+    .rank-item { display: flex; align-items: center; gap: 8px; }
+    .rank-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .rank-num.gold   { background: #fef9c3; color: #a16207; }
+    .rank-num.silver { background: #f1f5f9; color: #475569; }
+    .rank-num.bronze { background: #fff7ed; color: #c2410c; }
+    .rank-name { font-size: 12px; color: #333; font-weight: 500; flex: 1; }
+    .rank-count { font-size: 11px; color: #aaa; }
+
+    /* 인기글 박스 */
+    .box-posts {
+      width: 100%; border: 1px solid #e0e0e0; border-radius: 10px;
+      background: #fff; padding: 16px; display: flex; flex-direction: column;
+    }
+    .post-list { display: flex; flex-direction: column; gap: 0; margin-top: 10px; }
+    .post-item { padding: 8px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+    .post-item:last-child { border-bottom: none; }
+    .post-title {
+      font-size: 12px; color: #333; font-weight: 500; line-height: 1.4;
+      overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      transition: color 0.15s;
+    }
+    .post-item:hover .post-title { color: #16a34a; }
+    .post-meta { font-size: 10px; color: #bbb; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header-wrap">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="16" height="16">
+            <polyline points="2,12 6,7 9,10 14,4"/>
+          </svg>
+        </div>
+        <span class="logo-text">테크스캔</span>
+      </div>
+      <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="기술, 자격증, 회사명으로 검색" />
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="8.5" cy="8.5" r="5.5"/>
+          <line x1="13" y1="13" x2="18" y2="18"/>
+        </svg>
+      </div>
+      <div class="header-actions">
+        <button class="btn-outline" onclick="location.href='pages/login.html'">로그인</button>
+        <button class="btn-outline" onclick="location.href='pages/register.html'">회원가입</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메뉴바 -->
+  <nav class="menubar-wrap">
+    <div class="menubar-inner">
+      <a class="menu-item" href="index.html">분석</a>
+      <a class="menu-item inactive" href="pages/community.html">커뮤니티</a>
+      <a class="menu-item inactive" href="pages/schedule.html">일정</a>
+      <a class="menu-item inactive" href="pages/mypage.html">마이페이지</a>
+    </div>
+  </nav>
+
+  <!-- 콘텐츠 -->
+  <main class="content-area">
+    <div class="content-row">
+
+      <!-- 달력 + D-day -->
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="calendar">
+          <div class="cal-header">
+            <button class="cal-nav" id="prev">&#8249;</button>
+            <span class="cal-title" id="cal-title"></span>
+            <button class="cal-nav" id="next">&#8250;</button>
+          </div>
+          <div class="cal-days">
+            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+
+        <div class="dday-box">
+          <div class="box-title" style="font-size:13px; margin-bottom:10px;">⏰ 다가오는 시험</div>
+          <div class="dday-list" id="dday-list"></div>
+        </div>
+      </div>
+
+      <!-- 그래프 -->
+      <div class="box-graph">
+        <div class="box-title">기업이 요구하는 기술 TOP 7</div>
+        <div class="box-sub">최근 30일 채용공고 기준 · <span id="current-filter">전체 직군</span></div>
+        <div class="chart-tabs">
+          <button class="chart-tab active">전체</button>
+          <button class="chart-tab">개발</button>
+          <button class="chart-tab">데이터</button>
+          <button class="chart-tab">보안</button>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <span class="bar-label">Python</span>
+            <div class="bar-track"><div class="bar-fill" style="width:88%">88%</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">SQL</span>
+            <div class="bar-track"><div class="bar-fill blue" style="width:76%">76%</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">JavaScript</span>
+            <div class="bar-track"><div class="bar-fill purple" style="width:71%">71%</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">AWS</span>
+            <div class="bar-track"><div class="bar-fill orange" style="width:63%">63%</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Docker</span>
+            <div class="bar-track"><div class="bar-fill teal" style="width:55%">55%</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Java</span>
+            <div class="bar-track"><div class="bar-fill pink" style="width:48%">48%</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Git</span>
+            <div class="bar-track"><div class="bar-fill yellow" style="width:41%">41%</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽 패널 -->
+      <div class="right-panel">
+        <div class="box-rank">
+          <div class="box-title" style="font-size:13px;">인기 자격증 순위</div>
+          <div class="rank-list">
+            <div class="rank-item"><div class="rank-num gold">1</div><span class="rank-name">정보처리기사</span><span class="rank-count">2.4k</span></div>
+            <div class="rank-item"><div class="rank-num silver">2</div><span class="rank-name">AWS SAA</span><span class="rank-count">1.8k</span></div>
+            <div class="rank-item"><div class="rank-num bronze">3</div><span class="rank-name">SQLD</span><span class="rank-count">1.5k</span></div>
+            <div class="rank-item"><div class="rank-num">4</div><span class="rank-name">네트워크관리사</span><span class="rank-count">980</span></div>
+            <div class="rank-item"><div class="rank-num">5</div><span class="rank-name">리눅스마스터</span><span class="rank-count">740</span></div>
+            <div class="rank-item"><div class="rank-num">6</div><span class="rank-name">OPIC</span><span class="rank-count">620</span></div>
+          </div>
+        </div>
+
+        <div class="box-posts">
+          <div class="box-title" style="font-size:13px;">커뮤니티 인기글</div>
+          <div class="post-list">
+            <div class="post-item" onclick="location.href='pages/community_post.html'">
+              <div class="post-title">비전공자인데 정보처리기사 독학으로 합격했어요</div>
+              <div class="post-meta">조회 3.2k · 댓글 48</div>
+            </div>
+            <div class="post-item" onclick="location.href='pages/community_post.html'">
+              <div class="post-title">AWS SAA 2주 만에 합격 후기 + 공부법 공유</div>
+              <div class="post-meta">조회 2.8k · 댓글 35</div>
+            </div>
+            <div class="post-item" onclick="location.href='pages/community_post.html'">
+              <div class="post-title">요즘 채용공고에 Kubernetes 왜 이렇게 많이 나오나요?</div>
+              <div class="post-meta">조회 1.9k · 댓글 22</div>
+            </div>
+            <div class="post-item" onclick="location.href='pages/community_post.html'">
+              <div class="post-title">Python vs Java 어떤 걸 먼저 배우는 게 취업에 유리할까요</div>
+              <div class="post-meta">조회 1.7k · 댓글 61</div>
+            </div>
+            <div class="post-item" onclick="location.href='pages/community_post.html'">
+              <div class="post-title">SQLD 시험 후기 및 기출 유형 정리</div>
+              <div class="post-meta">조회 1.4k · 댓글 19</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="footer-wrap">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-logo">
+          <div class="logo-icon" style="width:22px;height:22px;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="12" height="12">
+              <polyline points="2,12 6,7 9,10 14,4"/>
+            </svg>
+          </div>
+          <span style="font-size:16px;font-weight:700;color:#15803d;">테크스캔</span>
+        </div>
+        <p class="footer-desc">기업 채용공고 기반 기술 · 자격증 트렌드를 한눈에 확인하세요.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <div class="footer-col-title">서비스</div>
+          <a href="index.html">기술 분석</a>
+          <a href="pages/analysis.html">자격증 순위</a>
+          <a href="pages/schedule.html">시험 일정</a>
+          <a href="pages/community.html">커뮤니티</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">회사</div>
+          <a href="#">소개</a>
+          <a href="#">공지사항</a>
+          <a href="#">문의하기</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">정책</div>
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 테크스캔. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    let cur = new Date();
+    const highlighted = [3, 7, 12, 15, 19, 22, 28];
+
+    function render() {
+      const y = cur.getFullYear(), m = cur.getMonth();
+      document.getElementById('cal-title').textContent = y + '년 ' + (m+1) + '월';
+      const grid = document.getElementById('cal-grid');
+      grid.innerHTML = '';
+      const first = new Date(y, m, 1).getDay();
+      const last  = new Date(y, m+1, 0).getDate();
+      const today = new Date();
+      for (let i = 0; i < first; i++) {
+        const d = new Date(y, m, -first+i+1).getDate();
+        const s = document.createElement('span');
+        s.textContent = d; s.className = 'other-month';
+        grid.appendChild(s);
+      }
+      for (let d = 1; d <= last; d++) {
+        const s = document.createElement('span');
+        s.textContent = d;
+        const dow = new Date(y, m, d).getDay();
+        if (dow === 0) s.classList.add('sun');
+        if (dow === 6) s.classList.add('sat');
+        if (d === today.getDate() && m === today.getMonth() && y === today.getFullYear())
+          s.classList.add('today');
+        else if (highlighted.includes(d))
+          s.style.background = '#dcfce7';
+        grid.appendChild(s);
+      }
+    }
+
+    document.getElementById('prev').onclick = () => { cur.setMonth(cur.getMonth()-1); render(); };
+    document.getElementById('next').onclick = () => { cur.setMonth(cur.getMonth()+1); render(); };
+    render();
+
+    const exams = [
+      { name: '정보처리기사 필기', sub: '한국산업인력공단', date: '2026-06-07' },
+      { name: 'SQLD', sub: '한국데이터산업진흥원', date: '2026-06-14' },
+      { name: '네트워크관리사 2급', sub: '한국정보통신자격협회', date: '2026-07-05' },
+      { name: 'AWS SAA', sub: 'Amazon Web Services', date: '2026-07-20' },
+      { name: '정보처리기사 실기', sub: '한국산업인력공단', date: '2026-08-09' },
+    ];
+
+    function renderDday() {
+      const today = new Date(); today.setHours(0,0,0,0);
+      const list = document.getElementById('dday-list');
+      list.innerHTML = '';
+      exams.forEach(exam => {
+        const target = new Date(exam.date); target.setHours(0,0,0,0);
+        const diff = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+        if (diff < 0) return;
+        const item = document.createElement('div');
+        item.className = 'dday-item';
+        const badge = diff === 0 ? 'D-DAY' : 'D-' + diff;
+        const badgeClass = diff <= 3 ? 'soon' : diff <= 7 ? 'week' : '';
+        item.innerHTML = `
+          <div>
+            <div class="dday-name">${exam.name}</div>
+            <div class="dday-sub">${exam.sub} · ${exam.date}</div>
+          </div>
+          <span class="dday-count ${badgeClass}">${badge}</span>
+        `;
+        list.appendChild(item);
+      });
+    }
+    renderDday();
+
+    document.querySelectorAll('.chart-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

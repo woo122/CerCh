@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>기술/자격증 분석 - 테크스캔</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/common.css" />
+  <style>
+    .section-title { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; }
+    .analysis-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+    .analysis-box {
+      flex: 1; min-width: 300px; border: 1px solid #e0e0e0; border-radius: 10px;
+      background: #fff; padding: 24px;
+    }
+    .rank-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .rank-table th { font-size: 12px; color: #888; font-weight: 500; padding: 6px 8px; border-bottom: 1px solid #f0f0f0; text-align: left; }
+    .rank-table td { font-size: 13px; color: #333; padding: 8px; border-bottom: 1px solid #f8f8f8; }
+    .rank-table tr:last-child td { border-bottom: none; }
+    .badge-rank {
+      display: inline-block; width: 22px; height: 22px; border-radius: 50%;
+      background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: 700;
+      text-align: center; line-height: 22px;
+    }
+    .badge-rank.gold   { background: #fef9c3; color: #a16207; }
+    .badge-rank.silver { background: #f1f5f9; color: #475569; }
+    .badge-rank.bronze { background: #fff7ed; color: #c2410c; }
+    .progress-bar { height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; margin-top: 4px; }
+    .progress-fill { height: 100%; background: #22c55e; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <header class="header-wrap">
+    <div class="header-inner">
+      <div class="logo" onclick="location.href='../index.html'">
+        <div class="logo-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="16" height="16">
+            <polyline points="2,12 6,7 9,10 14,4"/>
+          </svg>
+        </div>
+        <span class="logo-text">테크스캔</span>
+      </div>
+      <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="기술, 자격증, 회사명으로 검색" />
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="18" y2="18"/>
+        </svg>
+      </div>
+      <div class="header-actions">
+        <button class="btn-outline" onclick="location.href='login.html'">로그인</button>
+        <button class="btn-outline" onclick="location.href='register.html'">회원가입</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="menubar-wrap">
+    <div class="menubar-inner">
+      <a class="menu-item" href="../index.html">분석</a>
+      <a class="menu-item inactive" href="community.html">커뮤니티</a>
+      <a class="menu-item inactive" href="schedule.html">일정</a>
+      <a class="menu-item inactive" href="mypage.html">마이페이지</a>
+    </div>
+  </nav>
+
+  <main class="content-area">
+    <div class="filter-wrap" style="margin-bottom:24px;">
+      <span class="filter-label">직군 :</span>
+      <button class="filter-btn active">전체</button>
+      <button class="filter-btn">개발</button>
+      <button class="filter-btn">데이터</button>
+      <button class="filter-btn">보안</button>
+      <button class="filter-btn">클라우드</button>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="analysis-box">
+        <div class="section-title">기술 스택 상세 순위</div>
+        <table class="rank-table">
+          <thead>
+            <tr><th>순위</th><th>기술</th><th>언급 비율</th><th>추세</th></tr>
+          </thead>
+          <tbody id="tech-table-body">
+            <tr><td><span class="badge-rank gold">1</span></td><td>Python</td><td>88%<div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div></td><td style="color:#22c55e">▲ 3%</td></tr>
+            <tr><td><span class="badge-rank silver">2</span></td><td>SQL</td><td>76%<div class="progress-bar"><div class="progress-fill" style="width:76%;background:#60a5fa"></div></div></td><td style="color:#ef4444">▼ 1%</td></tr>
+            <tr><td><span class="badge-rank bronze">3</span></td><td>JavaScript</td><td>71%<div class="progress-bar"><div class="progress-fill" style="width:71%;background:#a78bfa"></div></div></td><td style="color:#22c55e">▲ 5%</td></tr>
+            <tr><td><span class="badge-rank">4</span></td><td>AWS</td><td>63%<div class="progress-bar"><div class="progress-fill" style="width:63%;background:#fb923c"></div></div></td><td style="color:#22c55e">▲ 8%</td></tr>
+            <tr><td><span class="badge-rank">5</span></td><td>Docker</td><td>55%<div class="progress-bar"><div class="progress-fill" style="width:55%;background:#2dd4bf"></div></div></td><td style="color:#22c55e">▲ 2%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="analysis-box">
+        <div class="section-title">자격증 상세 순위</div>
+        <table class="rank-table">
+          <thead>
+            <tr><th>순위</th><th>자격증</th><th>언급 횟수</th><th>추세</th></tr>
+          </thead>
+          <tbody id="cert-table-body">
+            <tr><td><span class="badge-rank gold">1</span></td><td>정보처리기사</td><td>2,400<div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></td><td style="color:#22c55e">▲ 12%</td></tr>
+            <tr><td><span class="badge-rank silver">2</span></td><td>AWS SAA</td><td>1,800<div class="progress-bar"><div class="progress-fill" style="width:75%;background:#60a5fa"></div></div></td><td style="color:#22c55e">▲ 20%</td></tr>
+            <tr><td><span class="badge-rank bronze">3</span></td><td>SQLD</td><td>1,500<div class="progress-bar"><div class="progress-fill" style="width:62%;background:#a78bfa"></div></div></td><td style="color:#22c55e">▲ 7%</td></tr>
+            <tr><td><span class="badge-rank">4</span></td><td>네트워크관리사</td><td>980<div class="progress-bar"><div class="progress-fill" style="width:41%;background:#fb923c"></div></div></td><td style="color:#aaa">— 0%</td></tr>
+            <tr><td><span class="badge-rank">5</span></td><td>리눅스마스터</td><td>740<div class="progress-bar"><div class="progress-fill" style="width:31%;background:#2dd4bf"></div></div></td><td style="color:#ef4444">▼ 3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-wrap">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-logo">
+          <div class="logo-icon" style="width:22px;height:22px;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="12" height="12">
+              <polyline points="2,12 6,7 9,10 14,4"/>
+            </svg>
+          </div>
+          <span style="font-size:16px;font-weight:700;color:#15803d;">테크스캔</span>
+        </div>
+        <p class="footer-desc">기업 채용공고 기반 기술 · 자격증 트렌드를 한눈에 확인하세요.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <div class="footer-col-title">서비스</div>
+          <a href="../index.html">기술 분석</a>
+          <a href="schedule.html">시험 일정</a>
+          <a href="community.html">커뮤니티</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">정책</div>
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 테크스캔. All rights reserved.</span></div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

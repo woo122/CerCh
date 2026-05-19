@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시글 - 테크스캔</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/common.css" />
+  <style>
+    .post-layout { display: flex; gap: 24px; }
+    .post-main { flex: 1; }
+    .sidebar { width: 240px; flex-shrink: 0; }
+    .post-box { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 28px; margin-bottom: 16px; }
+    .post-header { border-bottom: 1px solid #f0f0f0; padding-bottom: 16px; margin-bottom: 20px; }
+    .post-category { font-size: 12px; color: #22c55e; font-weight: 600; margin-bottom: 8px; }
+    .post-title-text { font-size: 20px; font-weight: 700; color: #1a1a1a; line-height: 1.4; margin-bottom: 12px; }
+    .post-meta { display: flex; gap: 12px; font-size: 12px; color: #aaa; align-items: center; }
+    .post-author { color: #555; font-weight: 500; }
+    .post-body { font-size: 14px; color: #333; line-height: 1.8; }
+    .post-actions { display: flex; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
+    .action-btn {
+      padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      border: 1px solid #ddd; background: #fff; color: #555; cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .action-btn:hover { border-color: #22c55e; color: #22c55e; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: #555; cursor: pointer; margin-bottom: 16px;
+      background: none; border: none; font-family: inherit; padding: 0;
+    }
+    .back-btn:hover { color: #22c55e; }
+    .comments-box { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 24px; }
+    .comments-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; }
+    .comment-item { padding: 12px 0; border-bottom: 1px solid #f8f8f8; }
+    .comment-item:last-child { border-bottom: none; }
+    .comment-author { font-size: 12px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .comment-author span { font-size: 11px; color: #aaa; font-weight: 400; margin-left: 8px; }
+    .comment-content { font-size: 13px; color: #444; line-height: 1.6; }
+    .comment-form { margin-top: 16px; }
+    .comment-textarea {
+      width: 100%; height: 80px; border: 1px solid #ddd; border-radius: 8px;
+      padding: 10px 14px; font-size: 13px; font-family: inherit; resize: none;
+      outline: none; transition: border-color 0.2s;
+    }
+    .comment-textarea:focus { border-color: #22c55e; }
+    .comment-submit {
+      margin-top: 8px; padding: 8px 20px; border: none; border-radius: 6px;
+      background: #22c55e; color: #fff; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit; float: right;
+    }
+    .comment-submit:hover { background: #16a34a; }
+    .sidebar-box { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+    .sidebar-title { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+    .related-item { font-size: 12px; color: #444; cursor: pointer; padding: 6px 0; border-bottom: 1px solid #f8f8f8; line-height: 1.4; }
+    .related-item:last-child { border-bottom: none; }
+    .related-item:hover { color: #16a34a; }
+  </style>
+</head>
+<body>
+
+  <header class="header-wrap">
+    <div class="header-inner">
+      <div class="logo" onclick="location.href='../index.html'">
+        <div class="logo-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="16" height="16">
+            <polyline points="2,12 6,7 9,10 14,4"/>
+          </svg>
+        </div>
+        <span class="logo-text">테크스캔</span>
+      </div>
+      <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="기술, 자격증, 회사명으로 검색" />
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="18" y2="18"/>
+        </svg>
+      </div>
+      <div class="header-actions">
+        <button class="btn-outline" onclick="location.href='login.html'">로그인</button>
+        <button class="btn-outline" onclick="location.href='register.html'">회원가입</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="menubar-wrap">
+    <div class="menubar-inner">
+      <a class="menu-item inactive" href="../index.html">분석</a>
+      <a class="menu-item" href="community.html">커뮤니티</a>
+      <a class="menu-item inactive" href="schedule.html">일정</a>
+      <a class="menu-item inactive" href="mypage.html">마이페이지</a>
+    </div>
+  </nav>
+
+  <main class="content-area">
+    <button class="back-btn" onclick="location.href='community.html'">← 목록으로</button>
+
+    <div class="post-layout">
+      <div class="post-main">
+        <div class="post-box">
+          <div class="post-header">
+            <div class="post-category">#정보처리기사</div>
+            <div class="post-title-text">비전공자인데 정보처리기사 독학으로 합격했어요</div>
+            <div class="post-meta">
+              <span class="post-author">홍길동</span>
+              <span>2026-05-15</span>
+              <span>조회 3,200</span>
+              <span>댓글 48</span>
+            </div>
+          </div>
+          <div class="post-body">
+            <p>안녕하세요! 이번 정보처리기사 필기 합격 후기 공유드립니다.</p>
+            <br>
+            <p>저는 컴퓨터 비전공 출신이고, 취업 준비 중에 스펙 보완 목적으로 공부를 시작했어요.</p>
+            <br>
+            <p><strong>공부 기간</strong>: 필기 2주, 실기 3주</p>
+            <br>
+            <p><strong>사용 교재</strong>: 수제비 필기 기본서 + 기출문제집</p>
+            <br>
+            <p><strong>공부 방법</strong>:<br>
+            1. 유튜브로 개념 훑기 (수제비 무료 강의 추천)<br>
+            2. 기본서 1회독<br>
+            3. 기출문제 3개년치 반복</p>
+            <br>
+            <p>비전공자분들도 충분히 가능합니다! 암기 위주라서 꾸준히 하면 돼요. 화이팅!</p>
+          </div>
+          <div class="post-actions">
+            <button class="action-btn">👍 도움됐어요 124</button>
+            <button class="action-btn">🔖 북마크</button>
+            <button class="action-btn">공유</button>
+          </div>
+        </div>
+
+        <div class="comments-box">
+          <div class="comments-title">댓글 48개</div>
+          <div class="comment-item">
+            <div class="comment-author">이영희 <span>2026-05-15 14:23</span></div>
+            <div class="comment-content">저도 이번에 도전해봐야겠어요! 수제비 교재 말씀하신 것처럼 좋나요?</div>
+          </div>
+          <div class="comment-item">
+            <div class="comment-author">홍길동 <span>2026-05-15 14:45</span></div>
+            <div class="comment-content">네 개인적으로 비전공자에게 친절한 편이에요. 용어 설명이 잘 되어 있어서 좋았습니다!</div>
+          </div>
+          <div class="comment-item">
+            <div class="comment-author">김철수 <span>2026-05-15 16:00</span></div>
+            <div class="comment-content">실기도 같은 방식으로 준비하셨나요? 실기는 어떻게 공부하면 될까요?</div>
+          </div>
+
+          <div class="comment-form">
+            <textarea class="comment-textarea" placeholder="댓글을 입력하세요 (로그인 필요)"></textarea>
+            <button class="comment-submit" onclick="location.href='login.html'">댓글 작성</button>
+            <div style="clear:both;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="sidebar-box">
+          <div class="sidebar-title">관련 글</div>
+          <div class="related-item">SQLD 시험 후기 및 기출 유형 정리</div>
+          <div class="related-item">AWS SAA 2주 만에 합격 후기 + 공부법 공유</div>
+          <div class="related-item">정보처리기사 실기 C언어 파트 어떻게 공부하셨나요</div>
+        </div>
+        <div class="sidebar-box">
+          <div class="sidebar-title">인기 태그</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span style="padding:3px 10px;background:#f0fdf4;color:#16a34a;border-radius:12px;font-size:12px;cursor:pointer;">#정보처리기사</span>
+            <span style="padding:3px 10px;background:#eff6ff;color:#3b82f6;border-radius:12px;font-size:12px;cursor:pointer;">#AWS</span>
+            <span style="padding:3px 10px;background:#fff7ed;color:#f97316;border-radius:12px;font-size:12px;cursor:pointer;">#SQLD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-wrap">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-logo">
+          <div class="logo-icon" style="width:22px;height:22px;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="12" height="12">
+              <polyline points="2,12 6,7 9,10 14,4"/>
+            </svg>
+          </div>
+          <span style="font-size:16px;font-weight:700;color:#15803d;">테크스캔</span>
+        </div>
+        <p class="footer-desc">기업 채용공고 기반 기술 · 자격증 트렌드를 한눈에 확인하세요.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <div class="footer-col-title">서비스</div>
+          <a href="../index.html">기술 분석</a>
+          <a href="schedule.html">시험 일정</a>
+          <a href="community.html">커뮤니티</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">정책</div>
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 테크스캔. All rights reserved.</span></div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+</body>
+</html>

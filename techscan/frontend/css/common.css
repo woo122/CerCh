@@ -1,0 +1,141 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background: #f4f6f8; }
+
+/* ── 헤더 ── */
+.header-wrap { width: 100%; background: #fff; border-bottom: 1px solid #e8e8e8; }
+.header-inner {
+  max-width: 1280px; margin: 0 auto; padding: 40px 0;
+  display: flex; align-items: center; gap: 20px;
+}
+.logo {
+  flex-shrink: 0; width: 200px; height: 70px;
+  background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+}
+.logo-icon {
+  width: 28px; height: 28px; background: #22c55e; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-text { font-size: 18px; font-weight: 700; color: #15803d; letter-spacing: -0.5px; }
+.search-wrap { flex-shrink: 0; width: 440px; height: 45px; position: relative; }
+.search-input {
+  width: 100%; height: 100%; border: 3px solid #22c55e; border-radius: 16px;
+  padding: 0 44px 0 18px; font-size: 14px; font-family: inherit; color: #1a1a1a;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff;
+}
+.search-input::placeholder { color: #aaa; }
+.search-input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(34,197,94,0.12); }
+.search-icon {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; color: #888; pointer-events: none;
+}
+.header-actions { margin-left: auto; display: flex; gap: 10px; }
+
+/* ── 버튼 ── */
+.btn-outline {
+  height: 45px; padding: 0 22px; border: 1px solid #ddd; border-radius: 6px;
+  background: transparent; font-size: 14px; font-family: inherit; font-weight: 500;
+  color: #333; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; white-space: nowrap;
+}
+.btn-outline:hover { background: #f7f7f7; border-color: #bbb; color: #111; }
+.btn-outline:active { transform: scale(0.98); }
+.btn-primary {
+  height: 45px; padding: 0 22px; border: none; border-radius: 6px;
+  background: #22c55e; font-size: 14px; font-family: inherit; font-weight: 600;
+  color: #fff; cursor: pointer; transition: background 0.15s;
+}
+.btn-primary:hover { background: #16a34a; }
+
+/* ── 메뉴바 ── */
+.menubar-wrap { width: 100%; background: #fff; border-bottom: 1px solid #e8e8e8; }
+.menubar-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; height: 52px; gap: 36px;
+}
+.menu-item {
+  font-size: 20px; font-weight: 500; color: #1a1a1a;
+  cursor: pointer; position: relative; padding-bottom: 2px; transition: color 0.15s;
+  text-decoration: none;
+}
+.menu-item::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 100%; height: 2.5px; background: #22c55e; border-radius: 2px;
+}
+.menu-item.inactive::after { display: none; }
+.menu-item.inactive { color: #555; font-weight: 400; }
+.menu-item.inactive:hover { color: #16a34a; }
+
+/* ── 필터 ── */
+.filter-wrap {
+  max-width: 1280px; margin: 0 auto; padding: 20px 0 0 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.filter-label { font-size: 13px; font-weight: 600; color: #555; white-space: nowrap; }
+.filter-btn {
+  padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  border: 1px solid #ddd; background: #fff; color: #555;
+  cursor: pointer; transition: all 0.15s; font-family: inherit;
+}
+.filter-btn.active { background: #15803d; color: #fff; border-color: #15803d; }
+.filter-btn:hover:not(.active) { border-color: #22c55e; color: #15803d; }
+
+/* ── 요약 카드 ── */
+.summary-wrap { background: #fff; border-bottom: 1px solid #e8e8e8; }
+.summary-inner {
+  max-width: 1280px; margin: 0 auto; padding: 20px 0;
+  display: flex; gap: 16px;
+}
+.summary-card {
+  flex: 1; background: #f8fffe; border: 1px solid #e0f2e9; border-radius: 10px;
+  padding: 16px 20px; display: flex; flex-direction: column; gap: 6px;
+}
+.summary-card-label { font-size: 12px; color: #888; font-weight: 500; }
+.summary-card-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.summary-card-sub { font-size: 12px; color: #22c55e; font-weight: 500; }
+
+/* ── 급상승 트렌드 ── */
+.trend-wrap { background: #fff; border-bottom: 1px solid #e8e8e8; }
+.trend-inner {
+  max-width: 1280px; margin: 0 auto; padding: 16px 0;
+  display: flex; align-items: center; gap: 16px;
+}
+.trend-label {
+  font-size: 13px; font-weight: 700; color: #1a1a1a;
+  white-space: nowrap; display: flex; align-items: center; gap: 6px;
+}
+.trend-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.trend-badge {
+  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+}
+.trend-badge.up { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
+.trend-badge.new { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+.trend-badge.hot { background: #fff7ed; color: #f97316; border: 1px solid #fed7aa; }
+.trend-badge:hover { filter: brightness(0.95); }
+
+/* ── 콘텐츠 공통 ── */
+.content-area { max-width: 1280px; margin: 0 auto; padding-top: 24px; padding-bottom: 40px; }
+.box-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.box-sub { font-size: 12px; color: #888; margin-bottom: 16px; }
+
+/* ── 푸터 ── */
+.footer-wrap { background: #1a1a1a; margin-top: 60px; }
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 40px 0 30px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.footer-top { display: flex; flex-direction: column; gap: 10px; }
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-desc { font-size: 13px; color: #888; max-width: 220px; line-height: 1.6; }
+.footer-links { display: flex; gap: 60px; }
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+.footer-col-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.footer-col a { font-size: 13px; color: #888; text-decoration: none; transition: color 0.15s; }
+.footer-col a:hover { color: #22c55e; }
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto;
+  padding: 16px 0;
+  border-top: 1px solid #2a2a2a;
+  font-size: 12px; color: #555;
+}
