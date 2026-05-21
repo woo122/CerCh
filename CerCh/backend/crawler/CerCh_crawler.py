@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 from openai import OpenAI
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent.parent.parent / "database" / "techscan.db"
+DB_PATH = Path(__file__).parent.parent.parent / "database" / "CerCh.db"
 OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"  # .env로 관리 권장
 SARAMIN_BASE = "https://www.saramin.co.kr/zf_user/jobs/list/job-category"
 
