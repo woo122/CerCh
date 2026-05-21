@@ -10,9 +10,9 @@
 git clone https://github.com/woo122/CerCh.git
 
 ### 작업 후 저장할 때
-git add .
-git commit -m "작업내용"
-git push
+git add .   //올릴 파일 선택
+git commit -m "작업내용" //세이브포인트 생성
+git push    //GitHub에 업로드
 
 ### 다른 환경에서 최신 코드 받을 때
 git pull
