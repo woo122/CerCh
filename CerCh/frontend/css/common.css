@@ -1,16 +1,30 @@
+/* =============================================
+   common.css - 테크스캔 공통 스타일
+   헤더, 메뉴바, 푸터, 공통 컴포넌트
+   ============================================= */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background: #f4f6f8; }
+body {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  background: #f4f6f8;
+  color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 /* ── 헤더 ── */
 .header-wrap { width: 100%; background: #fff; border-bottom: 1px solid #e8e8e8; }
 .header-inner {
-  max-width: 1280px; margin: 0 auto; padding: 40px 0;
-  display: flex; align-items: center; gap: 20px;
+  max-width: 1280px; margin: 0 auto; padding: 20px 0;
+  display: flex; align-items: center; gap: 40px;
 }
 .logo {
-  flex-shrink: 0; width: 200px; height: 70px;
-  background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+  color: #16A085;
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: normal;
 }
 .logo-icon {
   width: 28px; height: 28px; background: #22c55e; border-radius: 6px;
@@ -30,8 +44,6 @@ body { font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background:
   width: 18px; height: 18px; color: #888; pointer-events: none;
 }
 .header-actions { margin-left: auto; display: flex; gap: 10px; }
-
-/* ── 버튼 ── */
 .btn-outline {
   height: 45px; padding: 0 22px; border: 1px solid #ddd; border-radius: 6px;
   background: transparent; font-size: 14px; font-family: inherit; font-weight: 500;
@@ -39,12 +51,6 @@ body { font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background:
 }
 .btn-outline:hover { background: #f7f7f7; border-color: #bbb; color: #111; }
 .btn-outline:active { transform: scale(0.98); }
-.btn-primary {
-  height: 45px; padding: 0 22px; border: none; border-radius: 6px;
-  background: #22c55e; font-size: 14px; font-family: inherit; font-weight: 600;
-  color: #fff; cursor: pointer; transition: background 0.15s;
-}
-.btn-primary:hover { background: #16a34a; }
 
 /* ── 메뉴바 ── */
 .menubar-wrap { width: 100%; background: #fff; border-bottom: 1px solid #e8e8e8; }
@@ -65,61 +71,23 @@ body { font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background:
 .menu-item.inactive { color: #555; font-weight: 400; }
 .menu-item.inactive:hover { color: #16a34a; }
 
-/* ── 필터 ── */
-.filter-wrap {
-  max-width: 1280px; margin: 0 auto; padding: 20px 0 0 0;
-  display: flex; align-items: center; gap: 10px;
+/* ── 콘텐츠 영역 ── */
+.content-area {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 0;
+  flex: 1;
 }
-.filter-label { font-size: 13px; font-weight: 600; color: #555; white-space: nowrap; }
-.filter-btn {
-  padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
-  border: 1px solid #ddd; background: #fff; color: #555;
-  cursor: pointer; transition: all 0.15s; font-family: inherit;
-}
-.filter-btn.active { background: #15803d; color: #fff; border-color: #15803d; }
-.filter-btn:hover:not(.active) { border-color: #22c55e; color: #15803d; }
 
-/* ── 요약 카드 ── */
-.summary-wrap { background: #fff; border-bottom: 1px solid #e8e8e8; }
-.summary-inner {
-  max-width: 1280px; margin: 0 auto; padding: 20px 0;
-  display: flex; gap: 16px;
+.content-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
 }
-.summary-card {
-  flex: 1; background: #f8fffe; border: 1px solid #e0f2e9; border-radius: 10px;
-  padding: 16px 20px; display: flex; flex-direction: column; gap: 6px;
-}
-.summary-card-label { font-size: 12px; color: #888; font-weight: 500; }
-.summary-card-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
-.summary-card-sub { font-size: 12px; color: #22c55e; font-weight: 500; }
-
-/* ── 급상승 트렌드 ── */
-.trend-wrap { background: #fff; border-bottom: 1px solid #e8e8e8; }
-.trend-inner {
-  max-width: 1280px; margin: 0 auto; padding: 16px 0;
-  display: flex; align-items: center; gap: 16px;
-}
-.trend-label {
-  font-size: 13px; font-weight: 700; color: #1a1a1a;
-  white-space: nowrap; display: flex; align-items: center; gap: 6px;
-}
-.trend-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-.trend-badge {
-  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.15s;
-}
-.trend-badge.up { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
-.trend-badge.new { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
-.trend-badge.hot { background: #fff7ed; color: #f97316; border: 1px solid #fed7aa; }
-.trend-badge:hover { filter: brightness(0.95); }
-
-/* ── 콘텐츠 공통 ── */
-.content-area { max-width: 1280px; margin: 0 auto; padding-top: 24px; padding-bottom: 40px; }
-.box-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
-.box-sub { font-size: 12px; color: #888; margin-bottom: 16px; }
 
 /* ── 푸터 ── */
-.footer-wrap { background: #1a1a1a; margin-top: 60px; }
+.footer-wrap { background: #1a1a1a; margin-top: 50px; }
 .footer-inner {
   max-width: 1280px; margin: 0 auto;
   padding: 40px 0 30px;
@@ -139,3 +107,27 @@ body { font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background:
   border-top: 1px solid #2a2a2a;
   font-size: 12px; color: #555;
 }
+
+/* ── 비로그인 유도 카드 ── */
+.login-prompt-card {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 28px 20px; text-align: center; gap: 10px;
+  background: #fff; border-radius: 16px; border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 30px;
+}
+.login-prompt-icon { margin-bottom: 4px; }
+.login-prompt-title { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+.login-prompt-desc { font-size: 13px; color: #888; line-height: 1.6; }
+.login-prompt-btn {
+  width: 100%; height: 40px; margin-top: 6px;
+  background: #22c55e; color: #fff; border-radius: 10px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.login-prompt-btn:hover { background: #16a34a; }
+.login-prompt-link {
+  font-size: 12px; color: #aaa; text-decoration: none; transition: color 0.15s;
+}
+.login-prompt-link:hover { color: #22c55e; }
