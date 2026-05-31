@@ -18,3 +18,24 @@ git push          # GitHub에 업로드
 
 ### 다른 환경에서 최신 코드 받을 때
 git pull
+
+---
+
+## 백엔드 서버 실행 (회원가입/로그인 등 기능 사용 시 필요)
+
+### 처음 한 번만 - 패키지 설치
+```bash
+cd CerCh/backend
+pip install -r requirements.txt
+```
+
+### 매번 작업 시 - 서버 실행
+```bash
+cd CerCh/backend
+uvicorn main:app --reload
+```
+
+- 터미널에 `http://127.0.0.1:8000` 이 뜨면 정상 실행
+- 이 터미널은 작업 중 계속 켜둬야 함
+- API 테스트: `http://localhost:8000/docs`
+- 서버 종료: `Ctrl + C`

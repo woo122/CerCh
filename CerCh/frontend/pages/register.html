@@ -14,36 +14,38 @@
 
     <div class="card">
       <div class="field-group">
-        <span class="field-label">아이디 입력</span>
+        <span class="field-label">이메일</span>
         <div class="input-row">
-          <input type="text" placeholder="아이디 입력(6 ~ 20자)" />
-          <button class="btn-check">중복확인</button>
+          <input type="email" id="reg-email" placeholder="이메일을 입력해주세요." />
         </div>
       </div>
 
       <div class="field-group">
-        <span class="field-label">비밀번호 입력</span>
+        <span class="field-label">닉네임</span>
         <div class="input-row">
-          <input type="password" placeholder="비밀번호 입력(6 ~ 20자)" />
+          <input type="text" id="reg-nickname" placeholder="닉네임 입력 (2~10자)" />
         </div>
       </div>
 
       <div class="field-group">
-        <span class="field-label">비밀번호 재입력</span>
+        <span class="field-label">비밀번호</span>
         <div class="input-row">
-          <input type="password" placeholder="비밀번호 입력(6 ~ 20자)" />
+          <input type="password" id="reg-password" placeholder="비밀번호 입력 (8자 이상)" />
         </div>
       </div>
 
       <div class="field-group">
-        <span class="field-label">회원명 입력</span>
+        <span class="field-label">비밀번호 확인</span>
         <div class="input-row">
-          <input type="text" placeholder="회원명 입력(4 ~ 20자)" />
+          <input type="password" id="reg-password-confirm" placeholder="비밀번호 재입력" />
         </div>
       </div>
 
-      <button class="btn-signup">회원가입</button>
+      <div id="reg-error" style="color:#ef4444;font-size:13px;text-align:center;margin-top:8px;display:none;"></div>
+      <button class="btn-signup" id="btn-register">회원가입</button>
     </div>
   </div>
+  <script src="../js/api.js"></script>
+  <script src="../js/register.js"></script>
 </body>
 </html>
